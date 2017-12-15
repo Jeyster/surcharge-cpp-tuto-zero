@@ -52,12 +52,62 @@ Duree& Duree::operator+=(Duree const& a)
 
 Duree& Duree::operator+=(int secondes)
 {
+    Duree duree(0,0,secondes);
+    *this += duree;
+
+    /*
     m_secondes += secondes;
     m_minutes += m_secondes / 60;
 
     m_secondes %= 60;
     m_heures += m_minutes / 60;
     m_minutes %= 60;
+    */
+
+    return *this;
+}
+
+Duree& Duree::operator-=(Duree const& a)
+{
+    m_heures = m_heures + a.m_heures + (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) / 60;
+    m_minutes = (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) % 60;
+    m_secondes = (m_secondes + a.m_secondes) % 60;
+
+    return *this;
+}
+
+/* !!! BUG si *this < secondes !!!*/
+Duree& Duree::operator-=(int secondes)
+{
+    m_secondes -= secondes;
+
+    if (m_secondes < 0)
+    {
+        if (m_secondes % 60 != 0)
+        {
+            m_minutes += m_secondes / 60 - 1;
+            m_secondes = 60 + m_secondes % 60;
+        }
+        else
+        {
+            m_minutes += m_secondes / 60;
+            m_secondes = m_secondes % 60;
+        }
+
+        if (m_minutes < 0)
+        {
+            if (m_minutes % 60 != 0)
+            {
+                m_heures += m_minutes / 60 - 1;
+                m_minutes = 60 + m_minutes % 60;
+            }
+            else
+            {
+                m_heures += m_minutes / 60;
+                m_minutes = m_minutes % 60;
+            }
+        }
+    }
 
     return *this;
 }

@@ -18,6 +18,9 @@ int main()
     somme += 3705;
     somme.afficher();
 
+    duree2 -= 4551;
+    duree2.afficher();
+
     /*
     if (duree1 == duree2)
         cout << "Les durees sont identiques";

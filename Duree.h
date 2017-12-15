@@ -14,6 +14,8 @@ class Duree
         bool estPlusPetitQue(Duree const& duree) const;
         Duree& operator+=(Duree const& a);
         Duree& operator+=(int secondes);
+        Duree& operator-=(Duree const& a);
+        Duree& operator-=(int secondes);
 
     private:
         int m_heures;

@@ -48,3 +48,17 @@ Duree operator+(Duree const& duree, int secondes)
     copie += secondes;
     return copie;
 }
+
+Duree operator-(Duree const& a, Duree const& b)
+{
+    Duree copie(a);
+    copie -= b;
+    return copie;
+}
+
+Duree operator-(Duree const& duree, int secondes)
+{
+    Duree copie(duree);
+    copie -= secondes;
+    return copie;
+}
