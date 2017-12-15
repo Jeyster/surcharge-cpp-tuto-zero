@@ -170,3 +170,7 @@ Module.symvers
 Mkfile.old
 dkms.conf
 
+
+/solution
+
+

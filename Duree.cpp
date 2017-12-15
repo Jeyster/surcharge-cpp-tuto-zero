@@ -35,3 +35,29 @@ bool Duree::estEgal(Duree const& duree) const
 {
     return ((m_heures == duree.m_heures) && (m_minutes == duree.m_minutes) && (m_secondes == duree.m_secondes));
 }
+
+bool Duree::estPlusPetitQue(Duree const& duree) const
+{
+    return ((m_heures*3600 + m_minutes*60 + m_secondes) < (duree.m_heures*3600 + duree.m_minutes*60 + duree.m_secondes));
+}
+
+Duree& Duree::operator+=(Duree const& a)
+{
+    m_heures = m_heures + a.m_heures + (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) / 60;
+    m_minutes = (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) % 60;
+    m_secondes = (m_secondes + a.m_secondes) % 60;
+
+    return *this;
+}
+
+Duree& Duree::operator+=(int secondes)
+{
+    m_secondes += secondes;
+    m_minutes += m_secondes / 60;
+
+    m_secondes %= 60;
+    m_heures += m_minutes / 60;
+    m_minutes %= 60;
+
+    return *this;
+}

@@ -11,9 +11,11 @@ class Duree
         virtual ~Duree();
         void afficher();
         bool estEgal(Duree const& duree) const;
+        bool estPlusPetitQue(Duree const& duree) const;
+        Duree& operator+=(Duree const& a);
+        Duree& operator+=(int secondes);
 
     private:
-
         int m_heures;
         int m_minutes;
         int m_secondes;
