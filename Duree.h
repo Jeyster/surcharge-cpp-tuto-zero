@@ -9,9 +9,12 @@ class Duree
     public:
         Duree(int heures = 0, int minutes = 0, int secondes =0);
         virtual ~Duree();
-        void afficher();
+        void afficher() const;
+        void afficher(std::ostream &flux) const;
         bool estEgal(Duree const& duree) const;
         bool estPlusPetitQue(Duree const& duree) const;
+        int conversionEnSecondes() const;
+        Duree& conversionSecondesEnDuree(int secondes);
         Duree& operator+=(Duree const& a);
         Duree& operator+=(int secondes);
         Duree& operator-=(Duree const& a);

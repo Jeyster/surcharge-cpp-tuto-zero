@@ -12,14 +12,22 @@ int main()
     duree2.afficher();
     duree3.afficher();
 
+    int secondes = duree1.conversionEnSecondes();
+    cout << "Duree1 en secondes : " << secondes << endl;
+    duree1.conversionSecondesEnDuree(secondes).afficher();
+
     Duree somme = duree1 + duree2;
     somme.afficher();
 
     somme += 3705;
     somme.afficher();
 
-    duree2 -= 4551;
+    Duree difference = duree1 - duree2;
+    difference.afficher();
+
+    duree2 -= 8151;
     duree2.afficher();
+    cout << duree2 << endl;
 
     /*
     if (duree1 == duree2)

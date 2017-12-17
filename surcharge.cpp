@@ -62,3 +62,9 @@ Duree operator-(Duree const& duree, int secondes)
     copie -= secondes;
     return copie;
 }
+
+ostream& operator<<(ostream &flux, Duree const& duree)
+{
+    duree.afficher(flux);
+    return flux;
+}

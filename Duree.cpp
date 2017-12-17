@@ -26,9 +26,14 @@ Duree::~Duree()
     //dtor
 }
 
-void Duree::afficher()
+void Duree::afficher() const
 {
     cout << m_heures << " heures, " << m_minutes << " minutes et " << m_secondes << " secondes." << endl;
+}
+
+void Duree::afficher(ostream &flux) const
+{
+    flux << m_heures << " heures, " << m_minutes << " minutes et " << m_secondes << " secondes.";
 }
 
 bool Duree::estEgal(Duree const& duree) const
@@ -41,11 +46,32 @@ bool Duree::estPlusPetitQue(Duree const& duree) const
     return ((m_heures*3600 + m_minutes*60 + m_secondes) < (duree.m_heures*3600 + duree.m_minutes*60 + duree.m_secondes));
 }
 
+int Duree::conversionEnSecondes() const
+{
+    return (m_heures * 3600) + (m_minutes * 60) + m_secondes;
+}
+
+Duree& Duree::conversionSecondesEnDuree(int secondes)
+{
+    m_heures = secondes / 3600;
+    secondes %= 3600;
+
+    m_minutes = secondes / 60;
+    m_secondes = secondes % 60;
+
+    return *this;
+}
+
 Duree& Duree::operator+=(Duree const& a)
 {
+    /*
     m_heures = m_heures + a.m_heures + (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) / 60;
     m_minutes = (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) % 60;
     m_secondes = (m_secondes + a.m_secondes) % 60;
+    */
+
+    int secondes = this->conversionEnSecondes() + a.conversionEnSecondes();
+    this->conversionSecondesEnDuree(secondes);
 
     return *this;
 }
@@ -69,9 +95,8 @@ Duree& Duree::operator+=(int secondes)
 
 Duree& Duree::operator-=(Duree const& a)
 {
-    m_heures = m_heures + a.m_heures + (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) / 60;
-    m_minutes = (m_minutes + a.m_minutes + ((m_secondes + a.m_secondes) / 60)) % 60;
-    m_secondes = (m_secondes + a.m_secondes) % 60;
+    int secondes = this->conversionEnSecondes() - a.conversionEnSecondes();
+    this->conversionSecondesEnDuree(secondes);
 
     return *this;
 }
@@ -79,6 +104,10 @@ Duree& Duree::operator-=(Duree const& a)
 /* !!! BUG si *this < secondes !!!*/
 Duree& Duree::operator-=(int secondes)
 {
+    Duree duree(0,0,secondes);
+    *this += duree;
+
+    /*
     m_secondes -= secondes;
 
     if (m_secondes < 0)
@@ -108,6 +137,7 @@ Duree& Duree::operator-=(int secondes)
             }
         }
     }
+    */
 
     return *this;
 }
